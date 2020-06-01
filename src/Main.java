@@ -11,12 +11,21 @@ public class Main {
         //最大迭代数
         int maxClusterTimes = 1000;
         int sum;
+        //生成1000个随机点
+//        double x,y;
+//        ArrayList<Point> q= new ArrayList<Point>();
+//        Random rd = new Random();
+//        for (int i = 0; i <1000 ; i++) {
+//            Point a = new Point(rd.nextInt(100),rd.nextInt(100));
+//            q.add(a);
+//        }
+//        WriteData.toFile2(q,"/Users/chenshiyin/IdeaProjects/k-means/random.txt");
 
         //从文件中读取点集合
         ArrayList<Point> points = new ArrayList<Point>();
         ArrayList<Point> pointsCopy = new ArrayList<Point>();
         ReadData read = new ReadData();
-        String fileName="/Users/chenshiyin/IdeaProjects/k-means/points.txt";
+        String fileName="/Users/chenshiyin/IdeaProjects/k-means/140-2.txt";
         points = read.read(fileName);
         pointsCopy = read.read(fileName);
         sum=read.sum(fileName);
@@ -67,16 +76,9 @@ public class Main {
             System.out.println("第"+(i+1)+"类为：");
             System.out.println(cluster.get(i));
         }
-        WriteDate.toFile(cluster,"/Users/chenshiyin/IdeaProjects/k-means/ccc.txt");
+        WriteData.toFile(cluster,"/Users/chenshiyin/IdeaProjects/k-means/k-means.txt");
 
-//        double x,y;
-//        ArrayList<Point> q= new ArrayList<Point>();
-//        Random rd = new Random();
-//        for (int i = 0; i <10000 ; i++) {
-//            Point a = new Point(rd.nextInt(100),rd.nextInt(100));
-//            q.add(a);
-//        }
-//        WriteDate.toFile2(q,"/Users/chenshiyin/IdeaProjects/k-means/random.txt");
+
 
     }
 }

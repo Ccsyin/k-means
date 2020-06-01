@@ -4,7 +4,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class WriteDate {
+public class WriteData {
 
     public static void toFile(ArrayList<ArrayList<Point>> cluster, String file) {
         try{
@@ -40,9 +40,9 @@ public class WriteDate {
             for (int i = 0; i <q.size() ; i++) {
                 write.append(q.get(i).getX())
                         .append(",")
-                        .append(q.get(i).getY()+" ");
+                        .append(q.get(i).getY())
+                        .append("\r\n");
             }
-                write.append("\n");
             dos.write(write.toString());
             dos.close();
         }catch (Exception e){

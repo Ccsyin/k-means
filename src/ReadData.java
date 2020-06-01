@@ -13,8 +13,9 @@ public class ReadData {
             String line=null;
             double x,y;
             while ((line=reader.readLine()) != null){
-                x=Double.valueOf(line.split(",")[0]);
-                y=Double.valueOf(line.split(",")[1]);
+                line = line.trim();
+                x=Double.valueOf(line.split("\\s+")[0]);
+                y=Double.valueOf(line.split("\\s+")[1]);
                 Point point = new Point(x,y);
                 points.add(point);
             }
