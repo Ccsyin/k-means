@@ -25,7 +25,7 @@ public class Main {
         ArrayList<Point> points = new ArrayList<Point>();
         ArrayList<Point> pointsCopy = new ArrayList<Point>();
         ReadData read = new ReadData();
-        String fileName="/Users/chenshiyin/IdeaProjects/k-means/140-2.txt";
+        String fileName="C:/Users/Administrator/IdeaProjects/k-means/140-2.txt";
         points = read.read(fileName);
         pointsCopy = read.read(fileName);
         sum=read.sum(fileName);
@@ -43,9 +43,17 @@ public class Main {
 
         //初始化
 //        System.out.println("-----------初始化分类-----------");
+        ArrayList<Point> initialCenter = new ArrayList<Point>();
         ArrayList<ArrayList<Point>> cluster = new ArrayList<ArrayList<Point>>();
-        ArrayList<ArrayList<Point>> kCluster = new ArrayList<ArrayList<Point>>();
-        cluster = k.initialCluster(points,num);
+        ArrayList<ArrayList<Point>> initialKcluster = new ArrayList<ArrayList<Point>>();
+        //初始中心点
+        initialCenter=k.initialCenter(points,num);
+        System.out.println("初始中心种子："+initialCenter);
+        //初始空簇
+        cluster = k.initialCluster(points,initialCenter);
+        //初始分类集合
+        initialKcluster = k.initialKcluster(cluster,points,num);
+
 //        System.out.println(cluster);
 
 //        for (int i=0;i<kCluster.size();i++){
@@ -53,15 +61,25 @@ public class Main {
 //            System.out.println(kCluster.get(i));
 //        }
 
+        ArrayList<Point> preCenter = initialCenter;
+        ArrayList<Point> updateKcenter = new ArrayList<Point>();
+        ArrayList<ArrayList<Point>> updateKcluster = new ArrayList<ArrayList<Point>>();
+        updateKcenter = k.updateKcenter(initialKcluster,num);
+//        updateKcluster=k.updateKcluster(initialKcluster,points,initialCenter);
 
-        ArrayList<Point> updateCenter = new ArrayList<Point>();
-        ArrayList<ArrayList<Point>> updateCluster = new ArrayList<ArrayList<Point>>();
 
+        //迭代
         for (int i=1;i<maxClusterTimes;i++){
+            while (k.isKpointChange(preCenter,updateKcenter)){
 
-            updateCenter = k.updateCenter(cluster,num);
-            System.out.println("中心种子："+updateCenter);
-                updateCluster=k.updateCluster(cluster,points,updateCenter);
+                System.out.println("中心种子："+updateKcenter);
+                updateKcluster=k.updateKcluster(cluster,points,updateKcenter);
+                preCenter = updateKcenter;
+                System.out.println("之前中心种子："+preCenter);
+                updateKcenter = k.updateKcenter(updateKcluster,num);
+                System.out.println("变化后中心种子："+updateKcenter);
+            }
+
 //                System.out.println("--------------第"+(i+1)+"次归类--------------");
 //                for (int j=0;j<updateCluster.size();j++){
 //                    System.out.println("第"+(j+1)+"类为：");
@@ -76,7 +94,7 @@ public class Main {
             System.out.println("第"+(i+1)+"类为：");
             System.out.println(cluster.get(i));
         }
-        WriteData.toFile(cluster,"/Users/chenshiyin/IdeaProjects/k-means/k-means.txt");
+        WriteData.toFile(cluster,"C:/Users/Administrator/IdeaProjects/k-means/k-means.txt");
 
 
 

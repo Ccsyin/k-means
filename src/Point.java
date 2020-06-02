@@ -34,11 +34,15 @@ public class Point extends ArrayList<Point> implements Serializable {
     }
 
     //判断两点是否相同
-    public boolean equals(Point point1,Point point2){
-        if (point1.x == point2.x && point1.y == point2.y)
-            return true;
-        else
-            return false;
+    public static  boolean equals(Point point1,Point point2){
+        boolean a =true;
+        if (point1.x == point2.x && point1.y == point2.y){
+            a = true;
+        }
+        else{
+            a = false;
+        }
+        return a;
     }
 
     @Override

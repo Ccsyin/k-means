@@ -65,9 +65,17 @@ public class Kmeans {
 //        }
 //        return center;
 //    }
+    //初始化中心点（在已有点中选取前K个不重复的点作为中心种子）
+    public  ArrayList<Point> initialCenter(ArrayList<Point> points,int k){
+        ArrayList<Point> center = new ArrayList<Point>();
+        for (int i=0;i<k;i++){
+            center.add(points.get(i));
+        }
+        return center;
+    }
 
     //初始化K个中心点的k个簇
-    public ArrayList<ArrayList<Point>> initialCluster(ArrayList<Point> points,int k){
+    public ArrayList<ArrayList<Point>> initialCluster(ArrayList<Point> points,ArrayList<Point> center){
         ArrayList<ArrayList<Point>> cluster = new ArrayList<ArrayList<Point>>();
 //        for (int i=0;i<k;i++){
 //            ArrayList<Point> a= new ArrayList<Point>();
@@ -75,9 +83,9 @@ public class Kmeans {
 //            cluster.add(a);
 //        }
         //取前K个点当做中心种子
-        for (int i=0;i<k;i++){
+        for (int i=0;i<center.size();i++){
             ArrayList<Point> a= new ArrayList<Point>();
-            a.add(points.get(i));
+            a.add(center.get(i));
             cluster.add(a);
         }
         return cluster;
@@ -108,7 +116,7 @@ public class Kmeans {
     }
 
     //更新中心种子（求K个簇集合的重心）
-    public ArrayList<Point> updateCenter(ArrayList<ArrayList<Point>> cluster,int k){
+    public ArrayList<Point> updateKcenter(ArrayList<ArrayList<Point>> cluster,int k){
         ArrayList<Point> center = new ArrayList<Point>();
         double x;
         double y;
@@ -132,7 +140,7 @@ public class Kmeans {
     }
 
     //更新簇集合
-    public ArrayList<ArrayList<Point>> updateCluster(ArrayList<ArrayList<Point>> cluster,ArrayList<Point> points,ArrayList<Point> center){
+    public ArrayList<ArrayList<Point>> updateKcluster(ArrayList<ArrayList<Point>> cluster,ArrayList<Point> points,ArrayList<Point> center){
         for (int i=0;i<cluster.size();i++){
             cluster.get(i).clear();
         }
@@ -140,7 +148,7 @@ public class Kmeans {
             double[] mins = new double[center.size()];
             int min=0;
             for (int j=0;j<center.size();j++){
-                mins[j] = Point.distance(points.get(i),points.get(j));
+                mins[j] = Point.distance(points.get(i),center.get(j));
             }
             //求该点到哪个中心点的距离最短
             for (int j=1;j<center.size();j++){
@@ -153,16 +161,22 @@ public class Kmeans {
         return cluster;
     }
 
-    //中心种子是否没有发生改变
-    public boolean isNotKpointChange(ArrayList<Point> preCenter,ArrayList<Point> nowCenter){
+    //中心种子是否发生改变
+    public boolean isKpointChange(ArrayList<Point> preCenter,ArrayList<Point> nowCenter){
+        boolean is = true;
+        int a = 0;
         for (int i=0;i<nowCenter.size();i++){
-            for (int j=0;j<preCenter.size();j++){
-                if (nowCenter.get(i).equals(preCenter.get(j)) != true){
-                    return false;
+
+                Point point1 =nowCenter.get(i);
+                Point point2 =preCenter.get(i);
+                if (Point.equals(point1,point2)){
+                    a = a+1;
                 }
-            }
         }
-        return  true;
+        if (nowCenter.size() == a){
+            is = false;
+        }
+        return  is;
     }
 
 
