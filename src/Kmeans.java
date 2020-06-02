@@ -44,27 +44,6 @@ public class Kmeans {
         return cluster;
     }
 
-    //初始化中心点（随机在已有点中选取K个不重复的点作为中心种子）
-//    public  ArrayList<Point> initialCenter(int k,ArrayList<Point> points){
-//        Random rd = new Random();
-//        ArrayList<Point> center = new ArrayList<Point>();
-//        ArrayList<Point> pointsCopy = new ArrayList<Point>(points);
-//
-//        double x,y;
-//        for (int i=0;i<points.size();i++){
-//            x=points.get(i).getX();
-//            y=points.get(i).getY();
-//            pointsCopy.add(new Point(x, y));
-//        }
-//
-//        int a;
-//        for (int i = 0; i<k;i++){
-//            a=rd.nextInt(pointsCopy.size());
-//            center.add(pointsCopy.get(a));
-//            points.remove(pointsCopy.get(a));
-//        }
-//        return center;
-//    }
     //初始化中心点（在已有点中选取前K个不重复的点作为中心种子）
     public  ArrayList<Point> initialCenter(ArrayList<Point> points,int k){
         ArrayList<Point> center = new ArrayList<Point>();
@@ -77,12 +56,7 @@ public class Kmeans {
     //初始化K个中心点的k个簇
     public ArrayList<ArrayList<Point>> initialCluster(ArrayList<Point> points,ArrayList<Point> center){
         ArrayList<ArrayList<Point>> cluster = new ArrayList<ArrayList<Point>>();
-//        for (int i=0;i<k;i++){
-//            ArrayList<Point> a= new ArrayList<Point>();
-//            a.add(points.get(i));
-//            cluster.add(a);
-//        }
-        //取前K个点当做中心种子
+        //将前K个点分别放入K个簇
         for (int i=0;i<center.size();i++){
             ArrayList<Point> a= new ArrayList<Point>();
             a.add(center.get(i));
@@ -93,7 +67,6 @@ public class Kmeans {
 
     //将点集合进行初始分类
     public ArrayList<ArrayList<Point>> initialKcluster(ArrayList<ArrayList<Point>> cluster,ArrayList<Point> points,int k){
-//        cluster=initialcluster(k,points);
         double[] mins = new double[k];
         int min=0;
         for (int i=0;i<points.size();i++){
@@ -118,9 +91,7 @@ public class Kmeans {
     //更新中心种子（求K个簇集合的重心）
     public ArrayList<Point> updateKcenter(ArrayList<ArrayList<Point>> cluster,int k){
         ArrayList<Point> center = new ArrayList<Point>();
-        double x;
-        double y;
-//        Point a = new Point(x,y);
+        double x,y;
         double sumx=0;
         double sumy=0;
         for (int i=0;i<k;i++){
@@ -128,10 +99,10 @@ public class Kmeans {
                 sumx=cluster.get(i).get(j).getX()+sumx;
                 sumy=cluster.get(i).get(j).getY()+sumy;
             }
-            x=(double) Math.round((sumx/cluster.get(i).size())*100)/100;
-            y=(double) Math.round((sumy/cluster.get(i).size())*100)/100;
-//            a.setX(x);
-//            a.setY(y);
+//            x=(double) Math.round((sumx/cluster.get(i).size())*100)/100;
+//            y=(double) Math.round((sumy/cluster.get(i).size())*100)/100;
+            x=(double) (sumx/cluster.get(i).size());
+            y=(double) (sumy/cluster.get(i).size());
             center.add(new Point(x,y));
             sumx=0;
             sumy=0;
@@ -169,7 +140,7 @@ public class Kmeans {
 
                 Point point1 =nowCenter.get(i);
                 Point point2 =preCenter.get(i);
-                if (Point.equals(point1,point2)){
+                if (Point.equal(point1,point2)){
                     a = a+1;
                 }
         }

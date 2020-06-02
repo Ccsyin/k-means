@@ -34,7 +34,7 @@ public class Point extends ArrayList<Point> implements Serializable {
     }
 
     //判断两点是否相同
-    public static  boolean equals(Point point1,Point point2){
+    public static  boolean equal(Point point1,Point point2){
         boolean a =true;
         if (point1.x == point2.x && point1.y == point2.y){
             a = true;
