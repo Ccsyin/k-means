@@ -140,7 +140,7 @@ public class Kmeans {
             double[] mins = new double[center.size()];
             int min=0;
             for (int j=0;j<center.size();j++){
-                mins[j] = Point.distance(points.get(i),points.get(j));
+                mins[j] = Point.distance(points.get(i),center.get(j));
             }
             //求该点到哪个中心点的距离最短
             for (int j=1;j<center.size();j++){
