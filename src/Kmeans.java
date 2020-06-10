@@ -137,7 +137,6 @@ public class Kmeans {
         boolean is = true;
         int a = 0;
         for (int i=0;i<nowCenter.size();i++){
-
                 Point point1 =nowCenter.get(i);
                 Point point2 =preCenter.get(i);
                 if (Point.equal(point1,point2)){
